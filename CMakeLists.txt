@@ -11,7 +11,8 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-add_executable(kvstore src/main.cpp)
+add_executable(kvstore src/main.cpp src/store.cpp)
+
 
 target_include_directories(kvstore PRIVATE include)
 

@@ -2,12 +2,13 @@
 #include <optional>
 #include <string>
 #include <unordered_map>
+#include <cstddef>
 
 namespace kvstore {
 
 class KVStore {
 
-public:
+    public:
 
 void set(const std::string& key, const std::string& value);
 
@@ -17,7 +18,7 @@ bool del(const std::string& key);
 
 std::size_t size() const noexcept;
 
-private:
+    private:
 std::unordered_map<std::string, std::string> data_;
 
 };
