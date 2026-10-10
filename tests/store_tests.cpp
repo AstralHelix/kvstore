@@ -12,3 +12,12 @@ TEST(KVStoreTest, SetThenGetReturnsValue) {
     EXPECT_EQ(*get_test, "1");
 
 }
+
+TEST(KVStoreTest, GetMissingKeyReturnsEmpty) {
+    KVStore test_store;
+
+    // Act: get value of key that does not exist
+    auto get_test = test_store.get("A");
+    // Assert: check it does not exist
+    ASSERT_FALSE(get_test.has_value());
+}
