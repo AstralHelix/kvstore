@@ -11,11 +11,40 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-add_executable(kvstore src/main.cpp src/store.cpp)
+include(FetchContent)
+
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        v1.15.2
+)
+FetchContent_MakeAvailable(googletest)
+
+add_library(store_lib src/store.cpp)
+target_include_directories(store_lib PUBLIC include)
+
+add_executable(kvstore src/main.cpp)
+target_link_libraries(kvstore PRIVATE store_lib)
 
 
-target_include_directories(kvstore PRIVATE include)
+target_compile_options(store_lib PRIVATE
+  -Wall -Wextra -Wpedantic -Werror
+)
 
 target_compile_options(kvstore PRIVATE
   -Wall -Wextra -Wpedantic -Werror
 )
+
+enable_testing()
+
+add_executable(store_tests tests/store_tests.cpp)
+target_link_libraries(store_tests PRIVATE store_lib GTest::gtest_main)
+
+
+target_compile_options(store_tests PRIVATE
+  -Wall -Wextra -Wpedantic -Werror
+)
+
+include(GoogleTest)
+gtest_discover_tests(store_tests)
+
