@@ -24,5 +24,8 @@ bool KVStore::del(const std::string& key)
 
   return removed == 1;
 }
-
+std::size_t KVStore::size() const noexcept
+   {
+    return data_.size();
+   }
 }
